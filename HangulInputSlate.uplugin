@@ -1,0 +1,33 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.0",
+	"FriendlyName": "Hangul Input (Slate)",
+	"Description": "Korean (Hangul) text input for UE Slate/UMG. Bypasses the OS IME and composes Hangul itself to work around the UE TSF composition defect (UE-66315). Drop-in replacements for SEditableText/Box and SMultiLineEditableText/Box, plus UMG widgets. Korean only; Japanese/Chinese are not supported (they require a candidate window).",
+	"Category": "Input",
+	"CreatedBy": "",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"EngineVersion": "5.7.0",
+	"SupportedTargetPlatforms": [ "Win64", "Mac", "Linux" ],
+	"Modules": [
+		{
+			"Name": "HangulInputSlate",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [ "Win64", "Mac", "Linux" ]
+		},
+		{
+			"Name": "HangulInputSlateUMG",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [ "Win64", "Mac", "Linux" ]
+		}
+	]
+}
