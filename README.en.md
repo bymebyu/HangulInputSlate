@@ -111,7 +111,4 @@ default. Pass `.Style(...)` to apply your project's style.
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
-
-The Hangul jamo tables are original work (no libhangul code copied; algorithm referenced only),
-so there is no LGPL obligation.
+MIT — [LICENSE](LICENSE)

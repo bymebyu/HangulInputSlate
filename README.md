@@ -108,7 +108,4 @@ SNew(SHangulMultiLineEditableTextBox)
 
 ## 라이선스
 
-MIT — 자세한 내용은 [LICENSE](LICENSE)를 참조하세요.
-
-한글 자모 테이블은 오리지널 작업입니다 (libhangul 코드 미복사, 알고리즘만 참조),
-LGPL 의무 없음.
+MIT — [LICENSE](LICENSE)
