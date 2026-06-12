@@ -10,11 +10,17 @@
 > 📖 **예제 및 레시피:** **[EXAMPLES.md](EXAMPLES.md)** — 모든 위젯(Slate & UMG)의 copy-paste 샘플과
 > 채팅 입력, 검색 필드, 한/A 토글, 엔진 위젯에서의 마이그레이션 등 일반 패턴 수록.
 
-> **배경:** UE Slate는 직접(비-IME) 텍스트 편집 시 Windows TSF IME에 알림을 보내지 않아 IME 조합
-> 앵커가 밀리고, 공백/ASCII를 섞으면 한글 입력이 깨집니다. 이 버그는 모든 Slate 편집 텍스트
-> 위젯이 공유하는 코드에 있어 에디터와 Windows 패키지 게임 모두에 영향을 미칩니다. 런처로 설치한
-> 엔진에서 배포 가능한 유일한 수정 방법은 OS IME를 완전히 우회하고 키 입력에서 직접
-> **두벌식** 조합 오토마톤을 실행하는 것입니다.
+> **증상 (UE-66315):** 입력창에서 한글과 영어·공백을 번갈아 입력하다 보면 어느 순간 한글이
+> 더 이상 입력되지 않고 멈추는 현상입니다. 입력창 바깥을 클릭했다가 돌아오면 잠깐 회복되지만
+> 금방 다시 반복됩니다.
+>
+> **원인:** UE Slate는 영어·공백 같은 직접 텍스트 편집 시 Windows IME에 커서 위치 변경을
+> 알리지 않습니다. IME가 조합 위치(앵커)를 잃어버리고, 이후 한글 조합이 잘못된 위치에서
+> 시작되거나 완전히 깨집니다. 이 버그는 모든 Slate 편집 위젯이 공유하는 코드에 있어
+> 에디터와 Windows 패키지 게임 모두에 영향을 미칩니다.
+>
+> **해결:** 이 플러그인은 OS IME를 완전히 분리하고, 키 입력에서 직접 **두벌식** 조합 오토마톤을
+> 실행하여 문제를 우회합니다.
 
 ## 지원 범위
 
@@ -76,12 +82,22 @@ SNew(SHangulMultiLineEditableTextBox)
 
 ## 지원 API 및 알려진 제한
 
-- 엔진 위젯의 일반적인 표면을 반영합니다 (HintText, AutoWrapText, IsReadOnly,
-  ModiferKeyForNewLine, OnTextChanged, OnTextCommitted, SetText/GetText/InsertTextAtCursor).
-- **v1 미반영:** `SetError`/유효성 검사 시각 효과, 완전한 포커스/에러 스타일 상태, 일부 고급
-  스타일링. 이 기능이 필요하다면 원본 `SHangul…` 위젯 + 직접 만든 테두리를 사용하세요.
-- `…Box` 래퍼는 기본적으로 `FCoreStyle`의 `NormalEditableTextBox` 스타일을 사용합니다.
-  `.Style(...)`을 전달하여 프로젝트 외관에 맞출 수 있습니다.
+엔진 원본 위젯과 동일한 방식으로 사용할 수 있는 파라미터·메서드:
+
+`HintText`, `AutoWrapText`, `IsReadOnly`, `ModiferKeyForNewLine`,
+`OnTextChanged`, `OnTextCommitted`, `SetText` / `GetText` / `InsertTextAtCursor`
+
+**현재 미지원:**
+
+- `SetError` 및 유효성 검사 시각 효과 (빨간 테두리 등)
+- 포커스·에러 상태별 스타일 분리
+- 일부 고급 스타일 파라미터
+
+위 기능이 필요하다면 테두리 없는 `SHangul…` 위젯을 직접 `SBorder`나 커스텀 컨테이너로 감싸는
+방식으로 더 세밀하게 제어할 수 있습니다.
+
+**스타일:** `…Box` 위젯(테두리 포함)은 기본적으로 엔진의 `NormalEditableTextBox` 스타일을
+사용합니다. `.Style(...)`을 전달하여 프로젝트 스타일을 적용할 수 있습니다.
 
 ## 요구 사항 및 주의 사항
 

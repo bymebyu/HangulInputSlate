@@ -10,11 +10,18 @@ Drop-in replacements for the four Slate editable-text widgets, plus UMG (game UI
 > 📖 **Examples & recipes:** see **[EXAMPLES.en.md](EXAMPLES.en.md)** — copy-paste samples for every widget
 > (Slate & UMG) plus common patterns (chat input, search field, 한/A toggle, migration from engine widgets).
 
-> **Why:** UE Slate never notifies the Windows TSF IME of direct (non-IME) text edits, so the IME's
-> composition anchor drifts and Hangul input wedges once you mix spaces/ASCII. The bug lives in code
-> shared by every Slate editable-text widget, so it affects the editor *and* packaged games on Windows.
-> The only deployable fix on a launcher-installed engine is to bypass the OS IME entirely and run a
-> 두벌식 (2-set) composition automaton on the raw keystrokes.
+> **Symptom (UE-66315):** While typing Korean in an input field, switching to English or pressing
+> Space and then switching back to Korean causes Hangul input to silently stop working. Clicking
+> outside the field and back in restores it briefly, but the problem recurs immediately.
+>
+> **Cause:** UE Slate never notifies the Windows IME of cursor position changes that happen via
+> direct (non-IME) text edits — spaces, ASCII characters, etc. The IME loses track of its
+> composition anchor, and subsequent Hangul composition starts at the wrong position or breaks
+> entirely. The bug lives in code shared by every Slate editable-text widget, so it affects the
+> editor *and* packaged games on Windows.
+>
+> **Fix:** This plugin detaches the OS IME entirely and runs a 두벌식 (2-set) composition automaton
+> directly on raw keystrokes, bypassing the broken notification path.
 
 ## Scope
 
@@ -78,12 +85,22 @@ They expose `Text`, `HintText`, `OnTextChanged`, `OnTextCommitted`, and `SetText
 
 ## Supported API & known gaps
 
-- Mirrors the *common* surface of the engine widgets (HintText, AutoWrapText, IsReadOnly,
-  ModiferKeyForNewLine, OnTextChanged, OnTextCommitted, SetText/GetText/InsertTextAtCursor).
-- **Not** mirrored in v1: `SetError`/validation visuals, full focus/error style states, and some
-  advanced styling. Use the raw `SHangul…` widget + your own chrome if you need those.
-- The `…Box` wrappers use `FCoreStyle`'s `NormalEditableTextBox` style by default; pass `.Style(...)`
-  to match your project's look.
+Parameters and methods that work the same as the engine originals:
+
+`HintText`, `AutoWrapText`, `IsReadOnly`, `ModiferKeyForNewLine`,
+`OnTextChanged`, `OnTextCommitted`, `SetText` / `GetText` / `InsertTextAtCursor`
+
+**Not currently supported:**
+
+- `SetError` and validation visuals (e.g. red border on invalid input)
+- Per-state style separation (focused / error)
+- Some advanced styling parameters
+
+If you need these, wrap the borderless `SHangul…` widget in an `SBorder` or your own container
+for full control over the chrome.
+
+**Style:** The `…Box` widgets (with border) use the engine's `NormalEditableTextBox` style by
+default. Pass `.Style(...)` to apply your project's style.
 
 ## Requirements & caveats
 
