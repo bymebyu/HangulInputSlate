@@ -1,0 +1,13 @@
+# Unreal Engine build artifacts
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.VC.db
+*.opensdf
+*.sdf
+*.suo
