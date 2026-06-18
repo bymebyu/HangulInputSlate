@@ -7,7 +7,7 @@ public class HangulInputSlate : ModuleRules
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		// Pure Slate module: no CoreUObject/Engine dependency so it stays usable in
-		// Slate-only contexts (editor tooling, the UnrealClaude plugin, etc.).
+		// Slate-only contexts (editor tooling, other Slate plugins, etc.).
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core",

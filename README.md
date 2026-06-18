@@ -85,7 +85,7 @@ SNew(SHangulMultiLineEditableTextBox)
 엔진 원본 위젯과 동일한 방식으로 사용할 수 있는 파라미터·메서드:
 
 `HintText`, `AutoWrapText`, `IsReadOnly`, `ModiferKeyForNewLine`,
-`OnTextChanged`, `OnTextCommitted`, `SetText` / `GetText` / `InsertTextAtCursor`
+`OnTextChanged`, `OnTextCommitted`, `SetText` / `GetText` / `InsertTextAtCursor`(멀티라인 전용)
 
 **현재 미지원:**
 

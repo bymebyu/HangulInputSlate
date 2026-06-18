@@ -34,7 +34,7 @@ PrivateDependencyModuleNames.Add("HangulInputSlateUMG");
 ```
 
 > 팁: 플러그인 유무에 관계없이 빌드되는 **선택적 의존성**으로 구성하려면 `*.Build.cs`에서
-> 감지 후 매크로를 정의하세요. UnrealClaude의 `UnrealClaude.Build.cs` 패턴을 참고하세요.
+> 플러그인 존재를 감지한 뒤 매크로를 정의하세요.
 
 ---
 
@@ -76,7 +76,7 @@ SNew(SHangulEditableTextBox)
 
 ### Raw 위젯 (직접 테두리 구성)
 
-`…Box` 위젯은 스타일이 적용된 테두리를 포함합니다. UnrealClaude처럼 직접 테두리를 구성하고
+`…Box` 위젯은 스타일이 적용된 테두리를 포함합니다. 직접 테두리를 구성하고
 싶다면 Raw 위젯을 사용해 감싸세요:
 
 ```cpp
@@ -302,7 +302,7 @@ MyPanel->AddChild(Box);
 | 입력 중 필터 적용 | `OnTextChanged` |
 | 영어 모드로 시작 | `.StartInComposeMode(false)` (Slate) / 디자이너에서 체크 해제 + `SetComposeMode(false)` |
 | 한/A 토글 버튼 | `IsComposeMode()` 읽기, `ToggleComposeMode()` 호출 |
-| 모드 변경 반응 | `OnComposeModeChanged` 바인딩 (Slate) / v1 UMG 이벤트 없음 — `IsComposeMode()` 폴링 |
+| 모드 변경 반응 | `OnComposeModeChanged` 바인딩 (Slate) / UMG 이벤트는 현재 미제공 — `IsComposeMode()` 폴링 |
 | 입력 초기화 | `FlushComposition()` 후 `SetText(FText::GetEmpty())` |
 | 포커스 강제 설정 | `FSlateApplication::Get().SetUserFocus(0, Widget, EFocusCause::SetDirectly)` |
 
@@ -324,7 +324,7 @@ MyPanel->AddChild(Box);
 | `UMultiLineEditableTextBox` (UMG) | `UHangulMultiLineEditableTextBox` |
 
 일반 인수/메서드(HintText, AutoWrapText, IsReadOnly, ModiferKeyForNewLine, OnTextChanged,
-OnTextCommitted, SetText/GetText/InsertTextAtCursor)는 원본과 동일합니다. **v1 미반영:**
+OnTextCommitted, SetText/GetText/InsertTextAtCursor)는 원본과 동일합니다. **현재 미반영:**
 `SetError`/유효성 검사 시각 효과, 일부 고급 스타일링 — 이 기능이 필요하면 Raw `SHangul…`
 위젯 + 직접 만든 테두리를 사용하세요.
 
