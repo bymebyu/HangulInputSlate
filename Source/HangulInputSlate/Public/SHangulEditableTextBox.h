@@ -5,6 +5,7 @@
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Styling/SlateTypes.h"
 #include "Styling/CoreStyle.h"
+#include "Styling/SlateWidgetStyleAsset.h"
 #include "Framework/SlateDelegates.h"
 #include "HangulInputLanguage.h"
 
