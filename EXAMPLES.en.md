@@ -33,9 +33,8 @@ PrivateDependencyModuleNames.Add("HangulInputSlate");
 PrivateDependencyModuleNames.Add("HangulInputSlateUMG");
 ```
 
-> Tip: if you want the dependency to be **optional** (build with or without the plugin), detect it in
-> `*.Build.cs` and define a macro — see [README → "Optional dependency"](README.en.md) and the pattern in
-> UnrealClaude's `UnrealClaude.Build.cs`.
+> Tip: if you want the dependency to be **optional** (build with or without the plugin), detect the
+> plugin in `*.Build.cs` and define a macro.
 
 ---
 
@@ -77,8 +76,8 @@ SNew(SHangulEditableTextBox)
 
 ### Raw widgets (your own border)
 
-The `…Box` widgets include a styled border. If you want to supply your own chrome (like UnrealClaude
-does), use the raw widget and wrap it yourself:
+The `…Box` widgets include a styled border. If you want to supply your own chrome, use the raw widget
+and wrap it yourself:
 
 ```cpp
 #include "SHangulMultiLineEditableText.h"
@@ -303,7 +302,7 @@ MyPanel->AddChild(Box);
 | Filter-as-you-type search | `OnTextChanged` |
 | Start in English | `.StartInComposeMode(false)` (Slate) / uncheck in Designer + `SetComposeMode(false)` |
 | 한/A toggle button | read `IsComposeMode()`, call `ToggleComposeMode()` |
-| React to mode change | bind `OnComposeModeChanged` (Slate) / `On Compose Mode Changed` is not a UMG event in v1 — poll `IsComposeMode()` |
+| React to mode change | bind `OnComposeModeChanged` (Slate) / `On Compose Mode Changed` is not currently exposed as a UMG event — poll `IsComposeMode()` |
 | Clear input | `FlushComposition()` then `SetText(FText::GetEmpty())` |
 | Give focus | `FSlateApplication::Get().SetUserFocus(0, Widget, EFocusCause::SetDirectly)` |
 
@@ -325,7 +324,7 @@ Find-and-replace (within the `SNew`/`SAssignNew` call site):
 | `UMultiLineEditableTextBox` (UMG) | `UHangulMultiLineEditableTextBox` |
 
 The common arguments/methods (HintText, AutoWrapText, IsReadOnly, ModiferKeyForNewLine, OnTextChanged,
-OnTextCommitted, SetText/GetText/InsertTextAtCursor) match the originals. **Not** mirrored in v1:
+OnTextCommitted, SetText/GetText/InsertTextAtCursor) match the originals. **Not** currently mirrored:
 `SetError`/validation visuals and some advanced styling — use the raw `SHangul…` widget with your own
 chrome if you need those.
 

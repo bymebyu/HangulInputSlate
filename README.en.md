@@ -88,7 +88,7 @@ They expose `Text`, `HintText`, `OnTextChanged`, `OnTextCommitted`, and `SetText
 Parameters and methods that work the same as the engine originals:
 
 `HintText`, `AutoWrapText`, `IsReadOnly`, `ModiferKeyForNewLine`,
-`OnTextChanged`, `OnTextCommitted`, `SetText` / `GetText` / `InsertTextAtCursor`
+`OnTextChanged`, `OnTextCommitted`, `SetText` / `GetText` / `InsertTextAtCursor` (multi-line only)
 
 **Not currently supported:**
 
